@@ -1,6 +1,6 @@
 # Baskin Platform
 
-Gli eventi del Baskin: amichevoli, tornei e campionati, con il referto ufficiale compilato dal tablet.
+Gli eventi del Baskin: amichevoli, tornei e campionati.
 
 App: https://cavallidiegocavalli.github.io/baskin-platform/
 
