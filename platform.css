@@ -348,3 +348,117 @@ a.maplink svg{color:var(--brand)}
   .uc .ulb{display:none}
   .ua{justify-content:flex-end}
 }
+
+/* ---------- Squadre e atleti (Team Manager, 1.9) ---------- */
+.evd.sqd b,.evd.atd b{font-size:26px}
+.evd.atd small{text-transform:none}
+@media (min-width:760px){.evlist.two{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.atrow{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.atrow small{display:block;color:var(--muted);line-height:1.35}
+.atrow .grow{min-width:0;overflow-wrap:anywhere}
+.atn{min-width:42px;height:42px;border-radius:10px;background:var(--sunk);display:grid;place-items:center;font-family:var(--display);font-size:22px;font-weight:700;flex:none}
+.atder{display:flex;flex-direction:column;gap:12px}
+.atder .rolev{font-size:16px}
+.rchk .atdn{margin-top:8px;height:42px;border:1px solid var(--line);border-radius:10px;padding:0 12px;background:var(--surface);color:var(--ink);font:inherit;font-size:16px;width:100%}
+.cvlist{display:flex;flex-direction:column;gap:8px}
+.cvrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 10px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.cvrow.on{border-color:var(--brand);background:var(--brand-soft)}
+.cvrow.off{opacity:.55}
+.cvp{display:flex;align-items:center;gap:10px;flex:1;min-width:220px;cursor:pointer}
+.cvp input{width:22px;height:22px;flex:none;accent-color:var(--brand)}
+.cvp small{display:block;color:var(--muted);line-height:1.35}
+.cvp .grow{min-width:0;overflow-wrap:anywhere}
+.cvrow .seg button{min-width:52px}
+.stg{display:grid;grid-template-columns:1fr;gap:10px}
+@media (min-width:640px){.stg{grid-template-columns:minmax(0,1fr) minmax(0,1.5fr)}.stg .irr{grid-column:1/-1}}
+.stc{display:flex;flex-direction:column;gap:8px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--surface);min-width:0}
+.stc b{font-family:var(--display);font-size:30px;line-height:1}
+.stc small{color:var(--muted);line-height:1.3;font-size:12.5px}
+.stc.stk{background:var(--sunk);border-color:transparent;justify-content:center;gap:14px}
+.stc.stk span{display:flex;flex-direction:column;gap:3px}
+.stc.stk em{font-style:normal;font-size:16px;color:var(--muted);font-weight:600}
+.stc.stw{flex-direction:row;align-items:center;flex-wrap:wrap;gap:14px}
+.stc.irr{flex-direction:column;align-items:stretch}
+.stwr{display:flex;align-items:center;flex-wrap:wrap;gap:14px}
+.stv{display:flex;flex-direction:column;gap:3px;min-width:96px}
+.irl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 14px;border-top:1px solid var(--line);padding-top:10px}
+@media (min-width:480px){.irl{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.irl span{display:flex;flex-direction:column;gap:2px}
+.irl b{font-size:22px}
+.pie{display:flex;align-items:center;gap:12px;flex:1 0 auto;min-width:0}
+.pie svg{width:84px;height:84px;flex:none}
+.ps{stroke:var(--surface);stroke-width:2;stroke-linejoin:round}
+.ps.p1,.pleg i.p1{fill:var(--pie1);background:var(--pie1)}
+.ps.p2,.pleg i.p2{fill:var(--pie2);background:var(--pie2)}
+.ps.p0{fill:var(--sunk)}
+.pleg{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;min-width:0;font-size:13px}
+.pleg li{display:grid;grid-template-columns:12px minmax(0,1fr) auto;align-items:center;gap:8px}
+.pleg li i{width:12px;height:12px;border-radius:3px;align-self:center}
+.pleg li span{color:var(--ink);white-space:nowrap}
+.pleg li b{font-size:13px;font-weight:700;color:var(--ink);white-space:nowrap}
+:root{--pie1:#E07F12;--pie2:#2A78D6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--pie1:#D07514;--pie2:#3987E5}}
+:root[data-theme="dark"]{--pie1:#D07514;--pie2:#3987E5}
+.beta{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:12px;border:2px solid var(--warn);background:var(--warn-soft);line-height:1.45;font-size:14px;color:var(--ink)}
+.beta .chip{flex:none;margin-top:1px}
+.rcard{display:flex;flex-direction:column;align-items:center;gap:8px}
+.rcard .h3{margin:0;align-self:flex-start}
+.rcard>.sub{align-self:flex-start}
+.rcard .rdet{align-self:stretch}
+.radar{width:100%;max-width:340px;height:auto;overflow:visible}
+.rcard.sm .radar{max-width:240px}
+.rrowx .radar{width:110px;max-width:110px;flex:none}
+.radar .rg{fill:none;stroke:var(--line);stroke-width:1}
+.radar .rl{fill:var(--muted);font-size:11px;font-weight:700}
+.radar .rs{fill:color-mix(in srgb,var(--brand) 22%,transparent);stroke:var(--brand);stroke-width:2;stroke-linejoin:round}
+.radar .rs.cmp{fill:none;stroke:var(--muted);stroke-dasharray:5 4}
+.radar .rd{fill:var(--brand);stroke:var(--surface);stroke-width:2}
+.rleg{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--ink)}
+.rleg span{display:flex;align-items:center;gap:6px}
+.rleg i{width:18px;height:0;border-top:3px solid var(--brand)}
+.rleg i.cmp{border-top:2px dashed var(--muted)}
+.rhelp{margin:8px 0 0;padding-left:18px;color:var(--muted);line-height:1.45;font-size:13.5px}
+.rgrid{display:grid;grid-template-columns:1fr;gap:10px}
+@media (min-width:700px){.rgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1000px){.rgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.stmini{display:flex;flex-wrap:wrap;gap:6px 14px;align-self:stretch}
+.stmini span{display:flex;flex-direction:column;min-width:64px}
+.stmini b{font-family:var(--display);font-size:20px;line-height:1.05}
+.stmini small{color:var(--muted);font-size:11.5px;line-height:1.25}
+.stmini.col{flex-direction:column;gap:6px}
+.rrowx{display:flex;align-items:center;gap:14px;align-self:stretch}
+a.alink2{color:var(--ink);text-decoration:none}
+
+/* ---------- Statistiche delle squadre nella pagina dell'evento (1.9): righe allineate tra le due colonne ---------- */
+.evst{display:flex;flex-direction:column;gap:12px}
+.evst .h3{margin:0}
+.esg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:0}
+.esh,.esv{padding:8px 12px 8px 0;min-width:0}
+.esb{padding:8px 0 8px 12px;border-left:1px solid var(--line)}
+.esh{display:flex;flex-direction:column;gap:4px;padding-top:0}
+.esh.esb{padding-top:0}
+.esh small{color:var(--muted);line-height:1.35}
+.esn{font-family:var(--display);font-size:20px;line-height:1.1;overflow-wrap:anywhere}
+.esl{grid-column:1/-1;padding:9px 0 0;border-top:1px solid var(--line);color:var(--muted);font-size:12px;font-weight:700;letter-spacing:.2px}
+.esv{font-size:15px;line-height:1.35;overflow-wrap:anywhere}
+.esv>b{font-size:15px}
+.esv em{font-style:normal;font-weight:400;color:var(--muted);font-size:13px}
+.esd{color:var(--muted)}
+.esnum{font-weight:700}
+.esu{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.esu li{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:14px;min-width:0}
+.esu li span:last-child{overflow-wrap:anywhere;min-width:0}
+.esu .chip{padding:1px 7px;font-size:11.5px}
+@media (min-width:700px){.esh,.esv{padding-right:20px}.esh.esb,.esv.esb{padding-left:20px;padding-right:0}}
+/* risultato finale sotto i nomi delle squadre */
+.card.vs .vfin{font-family:var(--display);font-size:56px;line-height:1;color:var(--muted);font-weight:700}
+.card.vs .vfin.win{color:var(--ink)}
+.card.vs .vfl{align-self:center;color:var(--muted);font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;max-width:70px;line-height:1.2}
+/* liberatoria dell'atleta */
+.libc{display:flex;flex-direction:column;gap:12px}
+.libc.ok{border-color:var(--ok)}
+.libc.ok .rico{background:var(--ok-soft);color:var(--ok)}
+.libsteps{margin:0;padding-left:20px;color:var(--muted);line-height:1.5;font-size:14px}
+.libc label.btn{cursor:pointer}
+.libflag{padding:10px 12px;border:1px solid var(--line);border-radius:12px}
+.libflag small{color:var(--muted)}
