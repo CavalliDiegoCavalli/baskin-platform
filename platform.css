@@ -21,6 +21,18 @@
 
 @media (min-width:900px){.tnav{display:flex}.tabbar{display:none}}
 @media (max-width:420px){.pbar .bt .chip{display:none}.pbar .acc-in .bl{display:none}.pbar{gap:var(--space-8);padding:0 var(--space-12)}}
+/* Telefono (sotto 900 px, Diego 2026-10-20): niente barra in alto col logo; barra dei tab flottante sopra la pagina, con
+   lo spazio in fondo alla pagina perché l'ultimo contenuto non resti sotto. Barra "Salva" del calendario e avvisi si spostano */
+@media (max-width:899px){
+  :root{--tabh:calc(72px + var(--space-12))}
+  .pbar{display:none}
+  #app>.tabbar{position:absolute;left:calc(var(--space-12) + env(safe-area-inset-left,0px));right:calc(var(--space-12) + env(safe-area-inset-right,0px));bottom:calc(var(--space-12) + env(safe-area-inset-bottom,0px));z-index:35;
+    border:1px solid var(--line);border-radius:var(--radius-xl);background:color-mix(in srgb,var(--surface) 92%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:var(--shadow-3);overflow:hidden}
+  #app .page .wrap{padding-bottom:calc(var(--space-40) + var(--tabh) + var(--kb))}
+  #app>.page{scroll-padding-bottom:calc(var(--tabh) + var(--space-12))}
+  #app .pendbar{bottom:calc(var(--tabh) + var(--space-12))}
+  .toasts{top:calc(var(--space-12) + var(--top-pad))}
+}
 
 /* ---------- pagina ---------- */
 .page{overflow:auto;-webkit-overflow-scrolling:touch;-webkit-user-select:none;user-select:none}
@@ -507,8 +519,18 @@ a.alink2{color:var(--ink);text-decoration:none}
 .dsrc{opacity:.35}
 .dghost{position:fixed;z-index:1000;pointer-events:none;margin:0;opacity:.95;box-shadow:0 10px 28px rgba(0,0,0,.22);background:var(--surface);border-radius:var(--radius-md);cursor:grabbing}
 .dndh{margin:0 0 var(--space-8);font-size:var(--fs-13)}
-.card.vs .dteam{cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;border-radius:var(--radius-sm);padding:var(--space-2) var(--space-8);margin:0 calc(-1 * var(--space-8));background:linear-gradient(var(--sunk),var(--sunk)) bottom/100% 2px no-repeat}
-.card.vs .dteam.dz-on{background:var(--ok-soft);outline:2px solid var(--ok)}
+/* Pagina dell'evento (1.31, Diego 2026-10-19): è tutta la scheda "Faccia a faccia" (design-system/event-poster.css), da
+   bordo a bordo; sotto le statistiche le altre sezioni con lo stesso titolo centrato e la stessa colonna (840 px) */
+.wrap.wrap-ep{max-width:none;padding:0 0 var(--space-40);gap:0}
+.wrap-ep>.legal{padding:var(--space-16)}
+.wrap-ep>.ep{flex:1}
+.ep-more{width:100%;max-width:840px;box-sizing:border-box;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-24);padding:var(--space-24) var(--space-20) 0}
+.ep-msgs{display:flex;flex-direction:column;gap:var(--space-12)}
+.ep-sec{display:flex;flex-direction:column;gap:var(--space-12);padding-top:var(--space-24);border-top:1px solid var(--line)}
+.ep-sec .card{box-shadow:none}
+.ep-sec .varb{border-top:0;padding-top:0}.ep-sec .varl{display:none}
+.ep-end{padding-top:var(--space-24);border-top:1px solid var(--line)}
+@container ep (min-width:1280px){.ep-more{gap:var(--space-32);padding:var(--space-32) var(--space-40) 0}}
 /* campionati nell'elenco Eventi (1.12): card verdi gara per gara; collegamento dalla gara al torneo o al campionato */
 .evcard.camp .evd{background:var(--ok-soft)}
 .evcard.camp .evd b{color:var(--ok)}
@@ -529,7 +551,6 @@ a.alink2{color:var(--ink);text-decoration:none}
 .evd.sqd.lg img{width:100%;height:46px;object-fit:contain;display:block}
 .tnm{display:inline-flex;align-items:center;gap:var(--space-8);vertical-align:middle;max-width:100%}
 .tlogo{width:22px;height:22px;object-fit:contain;flex:none;border-radius:var(--radius-xs);background:#fff}
-.vs .vlogo{width:64px;height:64px;object-fit:contain;align-self:center;background:#fff;border-radius:var(--radius-md);padding:var(--space-4);border:1px solid var(--line)}
 .lgbox{width:44px;height:44px;border-radius:var(--radius-md);background:#fff;border:1px solid var(--line);display:grid;place-items:center;flex:none;padding:var(--space-4)}
 .lgbox img{max-width:100%;max-height:100%;object-fit:contain}
 .tcsw{display:flex;align-items:center;gap:var(--space-8);margin-top:var(--space-12)}
@@ -552,7 +573,6 @@ a.alink2{color:var(--ink);text-decoration:none}
 .svrow{width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer}
 .svrow small{display:block;color:var(--muted);font-size:var(--fs-12)}
 .svrow[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
-.card.vs .vt{align-self:stretch;justify-content:flex-end}
 .archb{display:inline-flex;align-items:center;gap:var(--space-8);margin-top:var(--space-8);font-size:var(--fs-13)}.archb svg{width:16px;height:16px;flex:none}
 
 /* ===== Redesign 1.16 (Diego, 2026-10-08): più larghezza, colonne laterali, elenco eventi per giorno ===== */
@@ -631,38 +651,27 @@ a.alink2{color:var(--ink);text-decoration:none}
   .evrow .evp:empty,.evrow .evs:empty{display:none}
 }
 /* calendario e colonna laterale */
-.mcal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:var(--space-2);text-align:center;font-size:var(--fs-13)}
-.mcal .cw{color:var(--muted);font-size:var(--fs-12);padding-bottom:var(--space-4)}
-.mcal .cd{position:relative;padding:var(--space-8) 0 var(--space-8);border-radius:var(--radius-pill);font-stretch:normal}
-.mcal .cd.has{font-weight:700}
-.mcal .cd.now{background:var(--primary);color:var(--on-fill)}
-.mcal .cd i{position:absolute;left:0;right:0;bottom:2px;display:flex;justify-content:center;gap:var(--space-2)}
-.mcal .cd i b,.mleg b{width:5px;height:5px;border-radius:var(--radius-round);display:inline-block;background:currentColor}
-.mcal .cd i b.ty-amichevole,.mleg b.ty-amichevole{background:var(--brand-blue)}
-.mcal .cd i b.ty-torneo,.mleg b.ty-torneo{background:var(--brand-orange)}
-.mcal .cd i b.ty-campionato,.mleg b.ty-campionato{background:var(--brand-green)}
-.mcal .cd.now i b{box-shadow:0 0 0 1px #fff}
-.mleg{display:flex;gap:var(--space-12);flex-wrap:wrap;font-size:var(--fs-12);color:var(--muted)}
-/* Eventi (1.25, Diego 2026-10-12): mese con le frecce, giorni toccabili, intestazione e colonna laterale ferme mentre scorre l'elenco */
-.mhead{display:flex;align-items:center;justify-content:space-between;gap:var(--space-8)}
-.mhead .lbl{margin:0;text-align:center;flex:1;text-transform:capitalize}
-.mnav{width:36px;height:36px;border-radius:var(--radius-round);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);display:grid;place-items:center;cursor:pointer;flex:none;padding:0}
-.mnav svg{width:18px;height:18px}
-.mnav:hover{border-color:var(--primary);color:var(--primary)}
-.mcal button.cd{border:0;background:transparent;font:inherit;color:inherit;cursor:pointer;width:100%;-webkit-tap-highlight-color:transparent}
-.mcal button.cd:hover{background:var(--primary-soft)}
-.mcal button.cd.now{background:var(--primary);color:var(--on-fill)}
-.mcal button.cd.sel{box-shadow:inset 0 0 0 2px var(--primary)}
-.mcal button.cd:focus-visible{outline:2px solid var(--focus);outline-offset:1px}
-.evtop{position:sticky;top:0;z-index:20;display:flex;flex-direction:column;gap:var(--space-16);background:var(--bg);margin:calc(-1 * var(--space-20)) calc(-1 * var(--space-16)) 0;padding:var(--space-20) var(--space-16) var(--space-12);border-bottom:1px solid var(--line)}
-@media (min-width:700px){.evtop{margin:calc(-1 * var(--space-32)) calc(-1 * var(--space-32)) 0;padding:var(--space-32) var(--space-32) var(--space-16)}}
-@media (min-width:980px){.evcols>.cside{position:sticky;top:calc(var(--evh,0px) + 16px);max-height:calc(var(--evvh,100vh) - var(--evh,0px) - 32px);overflow:auto;overscroll-behavior:contain;padding:var(--space-2);margin:calc(-1 * var(--space-2))}}
-.day.flash{animation:dflash 1.2s ease-out}
+/* Tab Eventi "Prima serata" (2026-10-20, design-system/events-tab.css): l'intestazione resta ferma in alto mentre scorre
+   l'elenco; da 980 px la colonna laterale (calendario, competizioni) resta ferma sotto l'intestazione */
+.evx-sticky{position:sticky;top:0;z-index:20;display:flex;flex-direction:column;gap:var(--space-12);background:var(--bg);margin:calc(-1 * var(--space-20)) calc(-1 * var(--space-16)) 0;padding:var(--space-20) var(--space-16) var(--space-12);border-bottom:1px solid var(--line)}
+@media (min-width:700px){.evx-sticky{margin:calc(-1 * var(--space-32)) calc(-1 * var(--space-32)) 0;padding:var(--space-32) var(--space-32) var(--space-16)}}
+.evx-extra{display:flex;flex-wrap:wrap;gap:6px var(--space-12);align-items:center;padding:0 var(--space-4)}
+.evx-extra .evx-f{flex:none;padding:0 var(--space-12)}
+.evx-extra .evx-f--x>span{display:inline-flex;align-items:center;gap:6px}
+.evx-extra .evx-f--x svg{width:16px;height:16px;flex:none}
+.evx-fdn{display:inline-flex;align-items:center;gap:6px}
+.evx-extra .evx-f--n{width:40px;padding:0}
+.evx-fl{font-size:var(--fs-11);font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:var(--space-4)}
+.evx .evx-f.evx-f--demo{border-color:var(--crit);color:var(--crit)}
+.evx-title-x{display:flex;margin-left:auto}
+.evx-title-x .evx-f{flex:none;padding:0 var(--space-12);height:40px}
+.evx-title-x .evx-f--x>span{display:inline-flex;align-items:center;gap:6px}
+.evx-compr:not(:has(.evx-mini--lead)){grid-template-columns:minmax(0,1fr) 18px}   /* competizione senza squadra in testa */
+.evx>.ainfo,.evx>.aerr{margin-top:var(--space-16)}
+.evx-cols{margin-top:var(--space-20)}
+@container evx (min-width:980px){.evx-side{position:sticky;top:calc(var(--evh,0px) + 16px);max-height:calc(var(--evvh,100vh) - var(--evh,0px) - 32px);overflow:auto;overscroll-behavior:contain;padding:var(--space-2);margin:calc(-1 * var(--space-2))}}
+.day.flash,.evx-group.flash{animation:dflash 1.2s ease-out}
 @keyframes dflash{0%{box-shadow:0 0 0 3px var(--primary)}100%{box-shadow:var(--shadow-1)}}
-.mleg span{display:inline-flex;align-items:center;gap:var(--space-4)}
-.mleg b{width:8px;height:8px}
-.cprog{display:flex;flex-direction:column;gap:var(--space-8);color:inherit;text-decoration:none;padding:var(--space-8) 0}
-.cprog+.cprog{border-top:1px solid var(--line);padding-top:var(--space-12)}
 .prog{height:8px;background:var(--sunk);border-radius:var(--radius-pill);overflow:hidden;display:block}
 .prog i{display:block;height:100%;background:var(--brand-green);border-radius:var(--radius-pill)}
 .cpn{display:flex;justify-content:space-between;gap:var(--space-8);font-size:var(--fs-13);flex-wrap:wrap}
@@ -679,67 +688,13 @@ a.alink2{color:var(--ink);text-decoration:none}
 .bsep{color:var(--line)}
 .back.blink{color:var(--primary)}.back.blink.camp{color:var(--ok)}
 .eacts{gap:var(--space-8)}.eacts .btn{height:40px}
-.card.vs.hero2{display:flex;flex-direction:column;gap:var(--space-16);padding:var(--space-24) var(--space-32);grid-template-columns:none}
-.vh1{margin:0;text-align:center;font-family:var(--font-display);font-stretch:var(--display-w);font-weight:800;font-size:var(--fs-24);line-height:1.1}
-.vchips{display:flex;justify-content:center;gap:var(--space-8);flex-wrap:wrap}
-.vchips .chip{gap:var(--space-8)}.vchips .ty{width:18px;height:18px;background:none!important}.vchips .ty svg{width:15px;height:15px}
-.vgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(120px,240px) minmax(0,1fr);grid-template-areas:"ca m cb" "na s nb";column-gap:var(--space-24);row-gap:var(--space-12);align-items:center;justify-items:center;text-align:center}
-.vgrid .vt{display:contents}
-.vt.a .vc{grid-area:ca}.vt.b .vc{grid-area:cb}.vt.a .vn{grid-area:na}.vt.b .vn{grid-area:nb}
-.vgrid .vm{grid-area:m}.vgrid .vms{grid-area:s;align-self:start;color:var(--muted);font-size:var(--fs-13);padding-top:var(--space-4)}
-.vc{display:grid;place-items:center;text-decoration:none}
-.card.vs .vlogo,.vcrest{width:128px;height:128px;border-radius:var(--radius-round);object-fit:contain;background:#fff;box-shadow:0 0 0 6px var(--surface),0 4px 12px rgba(20,32,43,.12)}
-.vcrest{display:grid;place-items:center;background:var(--sunk);color:var(--muted);font-size:var(--fs-42);font-weight:900}
-.vn{align-self:start;display:flex;flex-direction:column;gap:var(--space-2);min-width:0;max-width:100%}
-.vn b{font-family:var(--font-display);font-stretch:var(--display-w);font-weight:800;font-size:var(--fs-24);line-height:1.12;overflow-wrap:break-word;hyphens:auto}
-.vn small{color:var(--muted);font-size:var(--fs-14)}
-.vsc{font-family:var(--font-mono);font-size:var(--fs-60);font-weight:700;line-height:1;letter-spacing:-.04em;font-stretch:normal;white-space:nowrap}
-.vsc i{font-style:normal;color:var(--line);margin:0 var(--space-8)}
-.vsc.vtime{font-size:var(--fs-42)}
-.vmeta{display:flex;justify-content:center;gap:var(--space-24);flex-wrap:wrap;color:var(--muted);font-size:var(--fs-15);border-top:1px solid var(--line);padding-top:var(--space-16)}
-.vmeta>*{display:inline-flex;align-items:center;gap:var(--space-8)}.vmeta svg{width:18px;height:18px}
 @media (max-width:640px){
-  .card.vs.hero2{padding:var(--space-16) var(--space-16);gap:var(--space-12)}.vh1{font-size:var(--fs-20)}
-  .vgrid{grid-template-columns:minmax(0,1fr) 92px minmax(0,1fr);column-gap:var(--space-8);row-gap:var(--space-8)}
-  .card.vs .vlogo,.vcrest{width:76px;height:76px;box-shadow:0 0 0 3px var(--surface),0 2px 6px rgba(20,32,43,.12)}.vcrest{font-size:var(--fs-24)}
-  .vn b{font-size:var(--fs-15)}.vn small{font-size:var(--fs-12)}
-  .vsc{font-size:var(--fs-30)}.vsc i{margin:0 var(--space-4)}.vsc.vtime{font-size:var(--fs-24)}
-  .vmeta{flex-direction:column;align-items:center;gap:var(--space-4);font-size:var(--fs-14)}
   .ehtop .eacts{width:100%}.ehtop .grow{display:none}
 }
 .sidegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--space-16);align-items:start}
 .sidegrid>.card,.sidegrid>section{margin:0}
 .cols.eqh{align-items:stretch}
 .cols.eqh>.cside{align-self:flex-start}
-.cols.eqh>.cmain>.evst2:only-child,.cols.eqh>.cmain>.evst2:first-child:last-child{flex:1}
-/* statistiche (1.16) */
-.evst2{display:flex;flex-direction:column;padding:0;overflow:hidden}
-.evst2 h2{text-align:center;margin:0;padding:var(--space-16) var(--space-20) var(--space-12)}
-.s2r{flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(150px,220px) minmax(0,1fr);align-items:center;gap:var(--space-16);padding:var(--space-8) var(--space-24);border-top:1px solid var(--line)}
-.s2l{text-align:center;font-size:var(--fs-13);font-weight:700;color:var(--muted);line-height:1.3}
-.s2l small{display:block;font-weight:400;font-size:var(--fs-12)}
-.s2v{display:flex;align-items:center;gap:var(--space-12);min-width:0}
-.s2v.a{justify-content:flex-end;text-align:right}
-.s2v b.num{font-family:var(--font-mono);font-size:var(--fs-17);font-stretch:normal;min-width:44px}
-.s2v.a b.num{text-align:right}
-.esbar{flex:1;max-width:200px;height:8px;border-radius:var(--radius-pill);background:var(--sunk);display:flex;overflow:hidden}
-.esbar.r{justify-content:flex-end}
-.esbar i{display:block;height:100%;border-radius:var(--radius-pill)}
-.esres{width:24px;height:24px;border-radius:var(--radius-round);display:inline-grid;place-items:center;font-size:var(--fs-11);font-weight:800;flex:none}
-.esres.l{background:var(--sunk);color:var(--muted)}
-.s2v .esres+.esres{margin-left:calc(-1 * var(--space-4))}
-.espl{display:flex;flex-direction:column;gap:var(--space-2);min-width:0}
-.espl b{font-weight:700;font-size:var(--fs-14)}.espl .num{font-family:var(--font-mono);font-stretch:normal}
-.espl small{color:var(--muted);font-size:var(--fs-13)}
-.esd{color:var(--muted);font-size:var(--fs-13)}
-.esfoot{text-align:center;padding:var(--space-12) var(--space-20) var(--space-16);border-top:1px solid var(--line);margin:0}
-@media (max-width:640px){
-  .s2r{grid-template-columns:1fr 1fr;grid-template-areas:"l l" "a b";gap:var(--space-8) var(--space-12);padding:var(--space-12) var(--space-16)}
-  .s2l{grid-area:l}.s2v.a{grid-area:a;flex-direction:row-reverse;justify-content:flex-end;text-align:left}.s2v.b{grid-area:b;flex-direction:row-reverse;justify-content:flex-start;text-align:right}
-  .s2v.a b.num{text-align:left}.s2v.b b.num{text-align:right}
-  .s2v.a .espl{align-items:flex-start}.s2v.b .espl{align-items:flex-end}
-  .esbar{max-width:none}
-}
 
 /* squadre (1.16) */
 .page{overflow-x:hidden}
@@ -985,6 +940,37 @@ a.alink2{color:var(--ink);text-decoration:none}
 @media (max-width:980px){.atmain:not(.ro) td.atnum{grid-row:span 4}}
 @media (max-width:420px){.atmain:not(.ro) td.atnum{grid-row:span 7}}
 .sqnums .sqsl{display:inline-flex;align-items:center;gap:var(--space-8)}.sqnums .sqsl svg{width:16px;height:16px;flex:none}
+/* 1.31 (Diego, 2026-10-16). PC (da 900 px): niente "Gare della squadra" né card sintetica, statistiche di squadra e ruoli in
+   chiaro, prossimi eventi tutti e scorrevoli nella card con logo dell'avversaria e Casa/Trasferta. Telefono e tablet stretti:
+   come prima (prime 4 gare), e nella tabella degli atleti solo numero, cognome e nome, genere */
+.sqnlg{flex:none;display:flex}
+.sqnha{white-space:nowrap}
+.sqnx .sqnxl{display:flex;flex-direction:column;gap:var(--space-8)}
+.sqnx .sqnrow{position:relative;align-items:center}
+.sqnx .sqnrow>:not(.sqnlk){align-self:center}   /* il link che copre la riga no: centrato avrebbe altezza zero */
+.sqnx .sqnlk{position:absolute;inset:0;z-index:1;border-radius:var(--radius-md)}
+.sqnx .sqnlk:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+@media (hover:hover){.sqnx .sqnrow:hover b{text-decoration:underline}}
+.sqnd{display:flex;flex-direction:column;align-items:center;gap:var(--space-4);flex:none;width:52px}
+.sqnd .sqd8{width:auto;text-align:center}
+.sqnd .ty{width:30px;height:30px}.sqnd .ty svg{width:16px;height:16px}
+.sqnini{display:flex;align-items:center;justify-content:center;background:var(--sunk);color:var(--muted);font-size:var(--fs-12);font-weight:700}
+.rnames{list-style:none;margin:0;padding:var(--space-8) 0 0;border-top:1px solid var(--line);align-self:stretch;display:flex;flex-direction:column;gap:var(--space-4);font-size:var(--fs-15)}
+.rnames .chip{font-size:var(--fs-11);padding:var(--space-2) var(--space-8)}
+@media (min-width:900px){
+  .sqpage .sqgare,.sqpage .sqstm{display:none}
+  .sqnx .sqnxl{max-height:420px;overflow-y:auto;overscroll-behavior:contain;display:flex;flex-direction:column;margin-right:calc(-1 * var(--space-8));padding-right:var(--space-8)}
+  .sqstpc{display:flex;flex-direction:column;gap:var(--space-20)}
+}
+@media (max-width:899px){
+  .sqpage .sqstpc,.sqnx .sqnxp{display:none}
+  .sqnx .sqnxl>.sqnrow:nth-child(n+5){display:none}
+  .sqpage .atmain td[data-l="Ruolo"],.sqpage .atmain td[data-l="Tessera"],.sqpage .atmain td[data-l="Visita medica"],.sqpage .atmain td[data-l="Liberatoria"],.sqpage .atmain .atder{display:none}
+  .sqpage .atmain tr{grid-template-columns:44px minmax(0,1fr) auto;align-items:center}
+  .sqpage .atmain td.atnum,.sqpage .atmain:not(.ro) td.atnum{grid-row:auto}
+  .sqpage .atmain td.sxtn{grid-column:auto}
+  .sqpage .atmain td[data-l="Genere"]::before{display:none}
+}
 
 /* Società sportive (1.20): prefissi sx e so, diversi dalle classi del motore del referto (styles.css) */
 .sxsq>.sech{align-items:center;flex-wrap:wrap;gap:var(--space-12)}
@@ -1137,21 +1123,10 @@ a.chip.tychip:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 /* intestazione: Prossimi e orologio, pollice e Tutte con le tipologie accanto */
 .evfil .seg.tabs .evclk{display:inline-flex;align-items:center;justify-content:center;padding:0 var(--space-16)}
 .evclk svg{width:20px;height:20px}
-.evf2{display:flex;gap:var(--space-12);align-items:center;flex-wrap:wrap}
-.evacts{margin-left:auto}
 @media (max-width:640px){
   .fchips.ftys{width:auto;flex-wrap:nowrap}
-  .evf2{flex-wrap:nowrap}
-  .evacts{margin-left:0;width:100%}
-  .evfil,.evf2,.evfil .fchips,.fdn{justify-content:center}   /* 1.29: filtri centrati sul telefono */
-  #evcal,.cside>.card.side.cpside{display:none}   /* sul telefono niente calendario né avanzamento dei campionati */
+  .evfil,.evfil .fchips,.fdn{justify-content:center}   /* 1.29: filtri centrati sul telefono */
 }
-/* pagina dell'evento: giorno, data e ora al centro tra i loghi */
-.vgrid .vm{display:flex;flex-direction:column;align-items:center;gap:var(--space-8)}
-.vdate{display:flex;flex-direction:column;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-weight:700;line-height:1.1;letter-spacing:-.02em;font-stretch:normal;white-space:nowrap}
-.vwd,.vdd{font-size:var(--fs-20)}
-.vdd i{font-style:normal;margin:0 .2em}
-@media (max-width:640px){.vgrid .vm{gap:var(--space-4)}.vwd,.vdd{font-size:var(--fs-14)}}
 .sqseg.own{cursor:default}
 
 /* ---------- Pagina utente (1.29, Diego 2026-10-15) ---------- */
