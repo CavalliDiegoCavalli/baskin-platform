@@ -1,5 +1,5 @@
 /* SP-IN · Tab "Squadre" per i tifosi, proposta 5 "Muro degli stemmi" (TeamsTab)
-   Script classico, senza dipendenze. Espone window.SPIN.teamsTab:
+   Script classico; usa window.SPIN.core (spin-core.js, da caricare prima). Espone window.SPIN.teamsTab:
      render(data)        → HTML dell'intero tab: intestazione, muro degli stemmi e (da 900px) anteprima a destra
      header(h)           → titolo "Squadre", ricerca, pollice "Le mie squadre", "Registra una squadra"
      wall(teams)         → muro degli stemmi in ordine alfabetico
@@ -14,13 +14,10 @@
    realizzatore, miglior realizzatore da 3, V/P delle ultime 3 partite, più il prossimo evento. Niente dati live. */
 (function () {
   'use strict';
+  // design system v2 (2026-10-22): utilità comuni da spin-core (window.SPIN.core, caricato prima)
+  const core = window.SPIN.core, esc = core.esc, onColor = core.onColor;
 
   const INK = '#14202B';
-  function rgb(h) { h = String(h).replace('#', ''); if (h.length === 3) h = h.replace(/./g, c => c + c); return [0, 2, 4].map(i => parseInt(h.substr(i, 2), 16)); }
-  function lum(h) { return rgb(h).map(v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }).reduce((s, v, i) => s + v * [.2126, .7152, .0722][i], 0); }
-  function contrast(a, b) { const x = lum(a), y = lum(b); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); }
-  function onColor(h) { return contrast(h, '#FFFFFF') >= contrast(h, INK) ? '#FFFFFF' : INK; }
-  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]); }
   function attrs(o) { return Object.keys(o || {}).map(k => ` ${esc(k)}="${esc(o[k])}"`).join(''); }
   function abbr(t) { return (t.abbr || String(t.short || t.name || '').normalize('NFD').replace(/[^A-Za-z]/g, '').slice(0, 3)).toUpperCase() || '—'; }
   function initials(n) { return String(n || '').split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase(); }
@@ -136,9 +133,19 @@
     ${actions}
   </div>`;
   }
+  /* SP-IN (2026-10-23): senza accesso la scheda resta con stemma e nome nitidi; il resto (dati finti, dell'app) è sfocato
+     e inerte, con in evidenza l'invito a registrarsi. c.locked = {title, text, login, signup} (href o attrs). */
+  function lock(c, closable) {
+    const L = c.locked;
+    if (!L) return body(c, closable);
+    const btn = (o, cls, t) => o ? tag(o, cls, `<b>${esc(o.label || t)}</b>`) : '';
+    return `<div class="tmx-lock"><div class="tmx-lock-b" aria-hidden="true" inert>${body(c, closable)}</div>
+    <div class="tmx-lock-cta"><b class="tmx-lock-t">${esc(L.title || 'Registrati per vedere la squadra')}</b>${L.text ? `<p>${esc(L.text)}</p>` : ''}
+      <div class="tmx-lock-a">${btn(L.login, 'tmx-lock-in', 'Accedi')}${btn(L.signup, 'tmx-lock-up', 'Registrati')}</div></div></div>`;
+  }
   function card(c, o) {
     c = c || {}; o = o || {};
-    return `<section class="tmx-card" aria-label="${esc('Scheda di ' + ((c.team || {}).name || name(c.team || {})))}">${head(c, !!o.closable)}${body(c, !!o.closable)}</section>`;
+    return `<section class="tmx-card" aria-label="${esc('Scheda di ' + ((c.team || {}).name || name(c.team || {})))}">${head(c, !!o.closable)}${lock(c, !!o.closable)}</section>`;
   }
 
   /* ---------- dialog (telefono) ----------
@@ -153,7 +160,7 @@
   <div class="tmx-sheet" role="dialog" aria-modal="true" aria-label="${esc('Scheda di ' + (t.name || name(t)))}">
     <span class="tmx-grip" aria-hidden="true"></span>
     ${head(c, true)}
-    <div class="tmx-sheet-sc">${body(c, true)}</div>
+    <div class="tmx-sheet-sc">${lock(c, true)}</div>
   </div>
 </div>`;
   }
